@@ -9,6 +9,10 @@ body {
     font-family: Arial, sans-serif;
 }
 
+.nav {
+    margin-top: 3rem;
+}
+
 .sidebar {
     min-height: 100%;
     width: 250px;
@@ -59,7 +63,7 @@ body {
     border-radius: 50px;
 }
 
-.user p{
+.user p {
     font-size: 14px;
 }
 
@@ -72,27 +76,23 @@ body {
 }
 
 .card {
-    padding: 20px;
+    padding: 10px;
     color: white;
     border-radius: 8px;
 }
 
-.orange {
-    background: #f59e0b;
+.summary-card {
+
+    min-width: 190px;
+    border-left-width: 6px !important;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-left: .8rem;
+    margin-top: 2rem;
 }
 
-.red {
-    background: #ef4444;
-}
-
-.blue {
-    background: #3b82f6;
-}
-
-.green {
-    background: #22c55e;
-}
-
-.col-md-6{
-    margin: 10px 0;
+.sort-indicator {
+    font-size: 1.2rem;
+    color: #adb5bd;
+    cursor: pointer;
 }
