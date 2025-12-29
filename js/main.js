@@ -58,15 +58,19 @@ function deleteFromStorage(key, id) {
 
 
 // Generate unique ID
-function generateId() {
-    const products = getStorageData('products');
+function generateId(storageKey) {
+    const data = getStorageData(storageKey) || [];
 
-    if (products.length === 0) {
+    if (data.length === 0) {
         return '1';
     }
-    const lastId = Math.max(...products.map(p => Number(p.id)));
+
+    const lastId = Math.max(...data.map(item => Number(item.id)));
     return String(lastId + 1);
 }
+const newProductId = generateId('products');
+const newSupplierId = generateId('suppliers');
+
 
 // Initialize sample data if not exists
 function initializeSampleData() {
@@ -74,7 +78,10 @@ function initializeSampleData() {
     if (!localStorage.getItem('products')) {
         saveStorageData('products', products);
     }
-
+    // Sample Suppliers
+    if (!localStorage.getItem('suppliers')) {
+        saveStorageData('suppliers', suppliers);
+    }
 }
 
 
