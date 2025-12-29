@@ -68,18 +68,6 @@ function displaySuppliers() {
         </tr>
     `).join('');
 }
-function generateId() {
-    const suppliers = getStorageData('suppliers') || [];
-
-    if (suppliers.length === 0) {
-        return '1';
-    }
-
-    // Get the highest numeric ID and increment it
-    const lastId = Math.max(...suppliers.map(s => Number(s.id)));
-    return String(lastId + 1);
-}
-
 function filterSuppliers() {
     const searchValue = document.getElementById('searchSupplier')?.value.toLowerCase() || '';
 
