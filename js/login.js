@@ -1,61 +1,117 @@
-// Function to handle user login validation
-    function userLogin() {
-      // Get form elements
-      const username = document.getElementById("username");
-      const email = document.getElementById("email");
-      const password = document.getElementById("password");
+/* ========================
+   Authentication JS - Login Logic
+======================== */
 
-      // Get error message elements
-      const usernameError = document.getElementById("usernameError");
-      const emailError = document.getElementById("emailError");
-      const passwordError = document.getElementById("passwordError");
+document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('loginForm');
+    if (!loginForm) return;
 
-      // Reset error states
-      usernameError.style.display = "none";
-      emailError.style.display = "none";
-      passwordError.style.display = "none";
+    initUsers();
+    loadRememberedEmail();
 
-      username.classList.remove("error", "shake");
-      email.classList.remove("error", "shake");
-      password.classList.remove("error", "shake");
+    loginForm.addEventListener('submit', handleLogin);
+});
 
-      let valid = true;
+/* ========================
+   Functions
+======================== */
 
-      // Validate username
-      if (username.value.trim() === "") {
-        usernameError.style.display = "block";
-        username.classList.add("error", "shake");
-        valid = false;
-      }
+function initUsers() {
+    if (localStorage.getItem('users')) return;
 
-      // Validate email
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email.value)) {
-        emailError.style.display = "block";
-        email.classList.add("error", "shake");
-        valid = false;
-      }
+    const users = [
+        {
+            id: '1',
+            name: 'Admin User',
+            email: 'admin@test.com',
+            password: 'password123',
+            role: 'Admin',
+            status: 'Active',
+            joined: new Date().toISOString()
+        },
+        {
+            id: '2',
+            name: 'Manager User',
+            email: 'manager@test.com',
+            password: 'password123',
+            role: 'Manager',
+            status: 'Active',
+            joined: new Date().toISOString()
+        }
+    ];
 
-      // Validate password
-      if (password.value.length < 6) {
-        passwordError.style.display = "block";
-        password.classList.add("error", "shake");
-        valid = false;
-      }
+    localStorage.setItem('users', JSON.stringify(users));
+}
 
-      // If valid, proceed to dashboard
-      if (valid) {
-        // Save username to localStorage
-        localStorage.setItem("username", username.value);
-        // Redirect to dashboard
-        window.location.href = "dashboard.html";
-      }
+function handleLogin(e) {
+    e.preventDefault();
 
-      return false; // Prevent form submission
+    clearAlert();
+
+    const email = getInput('email').value.trim();
+    const password = getInput('password').value;
+    const rememberMe = getInput('rememberMe').checked;
+
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(u => u.email === email && u.password === password);
+
+    if (!user) {
+        showAlert('Invalid email or password. Try admin@test.com / password123');
+        getInput('password').value = '';
+        return;
     }
 
-    // Function to toggle password visibility
-    function togglePassword() {
-      const passwordField = document.getElementById("password");
-      passwordField.type = passwordField.type === "password" ? "text" : "password";
+    localStorage.setItem('currentUser', JSON.stringify(user));
+
+    if (rememberMe) {
+        localStorage.setItem('rememberEmail', email);
+    } else {
+        localStorage.removeItem('rememberEmail');
     }
+
+    window.location.href = 'dashboard.html';
+}
+
+function loadRememberedEmail() {
+    const email = localStorage.getItem('rememberEmail');
+    if (!email) return;
+
+    getInput('email').value = email;
+    getInput('rememberMe').checked = true;
+}
+
+function showAlert(message) {
+    const alert = document.createElement('div');
+    alert.className = 'alert alert-danger mt-3';
+    alert.id = 'loginAlert';
+    alert.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+
+    document.querySelector('.right-side').prepend(alert);
+}
+
+function clearAlert() {
+    const alert = document.getElementById('loginAlert');
+    if (alert) alert.remove();
+}
+
+function getInput(id) {
+    return document.getElementById(id);
+}
+/* ========================
+   Dashboard JS - Inventory Management
+======================== */
+document.addEventListener('DOMContentLoaded', () => {
+  const passwordInput = document.getElementById('password');
+  const togglePassword = document.getElementById('togglePassword');
+
+  togglePassword.addEventListener('click', () => {
+    const isPassword = passwordInput.type === 'password';
+
+    passwordInput.type = isPassword ? 'text' : 'password';
+    togglePassword.classList.toggle('fa-eye');
+    togglePassword.classList.toggle('fa-eye-slash');
+  });
+});

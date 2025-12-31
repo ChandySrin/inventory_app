@@ -1,185 +1,187 @@
 /* Reset and Global Styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+}
 
-    /* Body Layout */
-    body {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #f0f4f8;
-    }
+/* Body Layout */
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f4f8;
+}
 
-    /* Main Container */
-    .signup-container {
-      display: flex;
-      width: 80%;
-      max-width: 700px;
-      height: 580px;
-      background: #fff;
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, .1);
-    }
+/* Main Container */
+.login-container {
+  display: flex;
+  width: 80%;
+  max-width: 700px;
+  height: 580px;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
 
-    /* Left Side - Background Image */
-    .left-side {
-      flex: 1;
-      background: url('https://img.freepik.com/premium-photo/store-manager-hands-tablet-mockup-business-app-inventory-communication-online-update-tech-internet-professional-shop-management-man-with-blank-advertising-screen_590464-107863.jpg') center/cover;
-      position: relative;
-      color: #fff;
-    }
+/* Left Side - Background Image */
+.left-side {
+  flex: 1;
+  background: url('https://img.freepik.com/premium-photo/store-manager-hands-tablet-mockup-business-app-inventory-communication-online-update-tech-internet-professional-shop-management-man-with-blank-advertising-screen_590464-107863.jpg') center/cover;
+  position: relative;
+  color: #fff;
+}
 
-    .left-side::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(38, 0, 255, .75), #0000ff);
-    }
+.left-side::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #1a1aff, rgba(110, 26, 255, 0.858));
+}
 
-    .left-side .content {
-      position: relative;
-      z-index: 1;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 40px;
-    }
+.left-side .content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+}
 
-    /* Right Side - Form */
-    .right-side {
-      flex: 1;
-      padding: 40px 50px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
+.left-side h2 {
+  font-size: 36px;
+  font-weight: 600;
+}
 
-    /* Logo */
-    .logo {
-      width: 75px;
-      height: 75px;
-      margin: 0 auto 15px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+/* Right Side - Form */
+.right-side {
+  flex: 1;
+  padding: 40px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-    .logo i {
-      color: #fff;
-      font-size: 50px;
-    }
+/* Logo */
+.logo {
+  width: 75px;
+  height: 75px;
+  margin: 0 auto 15px;
+  background: linear-gradient(135deg, #1a1aff, #584ba2);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    /* Headings and Paragraphs */
-    h1 {
-      text-align: center;
-    }
+.logo i {
+  color: #fff;
+  font-size: 50px;
+}
 
-    p {
-      text-align: center;
-      color: #b1b1b1;
-      margin-bottom: 35px;
-    }
+/* Headings and Paragraphs */
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+}
 
-    /* Form Groups */
-    .form-group {
-      position: relative;
-      margin-bottom: 20px;
-    }
+p {
+  text-align: center;
+  color: #b1b1b1;
+  margin-bottom: 30px;
+}
 
-    .form-group input {
-      width: 100%;
-      padding: 12px 45px;
-      border: 2px solid #e0e0e0;
-      border-radius: 12px;
-      font-size: 14px;
-    }
+/* Form Fields */
+.mb-3 input {
+  width: 5%;
+  padding: 6px 8px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
 
-    .form-group i {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #aaa;
-    }
+.mb-3 input:focus {
+  border-color: #1a1aff;
+  box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+  outline: none;
+}
+.mb-3 input[type="text"],
+.mb-3 input[type="email"],
+.mb-3 input[type="password"] {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-    .toggle-password {
-      left: auto;
-      right: 15px;
-      cursor: pointer;
-    }
+.form-check-input {
+  width: auto;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
 
-    /* Error Styles */
-    .error {
-      border-color: #e74c3c !important;
-      box-shadow: 0 0 0 3px rgba(231, 76, 60, .15);
-    }
+.form-check-label {
+  font-size: 13px;
+  color: #555;
+  cursor: pointer;
+}
+/* Button */
+.login-btn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 48px;
+  background: linear-gradient(135deg, #002fff, #4b8dff);
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+.login-btn:hover {
+  opacity: 0.9;
+}
+.form-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+/* Error Styles */
+.error {
+  border-color: #e74c3c !important;
+}
 
-    .error-message {
-      display: none;
-      color: #e74c3c;
-      font-size: 13px;
-      margin-top: 6px;
-    }
+.error-message {
+  display: none;
+  color: #e74c3c;
+  font-size: 13px;
+  margin-top: 6px;
+}
 
-    .shake {
-      animation: shake .4s;
-    }
+/* Mobile Responsive */
+@media(max-width:768px) {
+  .login-container {
+    flex-direction: column;
+    height: auto;
+  }
 
-    @keyframes shake {
-      0% {
-        transform: translateX(0)
-      }
-
-      25% {
-        transform: translateX(-5px)
-      }
-
-      50% {
-        transform: translateX(5px)
-      }
-
-      75% {
-        transform: translateX(-5px)
-      }
-
-      100% {
-        transform: translateX(0)
-      }
-    }
-
-    /* Button */
-    .login-btn {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 48px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: #fff;
-      font-size: 14px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    /* Mobile Responsive */
-    @media(max-width:768px) {
-      .signup-container {
-        flex-direction: column;
-        height: auto;
-      }
-
-      .left-side {
-        height: 300px;
-      }
-    }
+  .left-side {
+    height: 250px;
+  }
+}
