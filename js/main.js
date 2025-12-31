@@ -1,46 +1,4 @@
-/* ========================
-   Main JS - General Functions
-======================== */
-
-document.addEventListener('DOMContentLoaded', () => {
-    initializeSampleData();
-    checkAuth();
-    setupLogoutButtons();
-});
-
-/* ========================
-   Authentication & Logout
-======================== */
-
-function checkAuth() {
-    const user = localStorage.getItem('currentUser');
-    const currentPage = window.location.pathname;
-
-    // Protected pages
-    if (!user && !currentPage.includes('index.html') && currentPage !== '/') {
-        window.location.href = 'index.html';
-    }
-
-    // Already logged in on login page
-    if (user && currentPage.includes('index.html')) {
-        window.location.href = 'dashboard.html';
-    }
-}
-
-function setupLogoutButtons() {
-    const logoutBtns = document.querySelectorAll('#logoutBtn');
-    logoutBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            localStorage.removeItem('currentUser');
-            window.location.href = 'index.html';
-        });
-    });
-}
-
-/* ========================
-   Notifications
-======================== */
-
+// Show notification toast
 function showNotification(message, type = 'success') {
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert alert-${type} alert-dismissible fade show fade-in`;
@@ -50,16 +8,19 @@ function showNotification(message, type = 'success') {
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     `;
 
+    // Insert at top of main content
     const main = document.querySelector('main');
-    if (main) main.prepend(alertDiv);
+    if (main) {
+        main.insertBefore(alertDiv, main.firstChild);
+    }
 
-    setTimeout(() => alertDiv.remove(), 3000);
+    // Auto dismiss after 3 seconds
+    setTimeout(() => {
+        alertDiv.remove();
+    }, 3000);
 }
 
-/* ========================
-   Utility Functions
-======================== */
-
+// Format date to YYYY-MM-DD format
 function formatDate(date) {
     const d = new Date(date);
     const month = String(d.getMonth() + 1).padStart(2, '0');
@@ -68,6 +29,7 @@ function formatDate(date) {
     return `${year}-${month}-${day}`;
 }
 
+// Format currency
 function formatCurrency(value) {
     return new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -75,79 +37,55 @@ function formatCurrency(value) {
     }).format(value);
 }
 
+// Get data from localStorage or return empty array
 function getStorageData(key) {
     const data = localStorage.getItem(key);
     return data ? JSON.parse(data) : [];
 }
 
+// Save data to localStorage
 function saveStorageData(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
 }
 
+
+// Delete item from localStorage
 function deleteFromStorage(key, id) {
-    const filtered = getStorageData(key).filter(item => item.id !== id);
+    const data = getStorageData(key);
+    const filtered = data.filter(item => item.id !== id);
     saveStorageData(key, filtered);
 }
 
-function generateId() {
-    return '_' + Math.random().toString(36).substring(2, 9);
+
+// Generate unique ID
+function generateId(storageKey) {
+    const data = getStorageData(storageKey) || [];
+
+    if (data.length === 0) {
+        return '1';
+    }
+
+    const lastId = Math.max(...data.map(item => Number(item.id)));
+    return String(lastId + 1);
 }
+const newProductId = generateId('products');
+const newSupplierId = generateId('suppliers');
 
-/* ========================
-   Sample Data Initialization
-======================== */
 
+// Initialize sample data if not exists
 function initializeSampleData() {
+    // Sample Products
     if (!localStorage.getItem('products')) {
-        saveStorageData('products', [
-            { id: '1', name: 'Laptop', category: 'Electronics', price: 999.99, stock: 15, supplier: '1' },
-            { id: '2', name: 'Mouse', category: 'Electronics', price: 29.99, stock: 50, supplier: '1' },
-            { id: '3', name: 'Keyboard', category: 'Electronics', price: 79.99, stock: 30, supplier: '2' }
-        ]);
+        saveStorageData('products', products);
     }
-
+    // Sample Suppliers
     if (!localStorage.getItem('suppliers')) {
-        saveStorageData('suppliers', [
-            { id: '1', name: 'Tech Supplies Inc', contact: 'John Doe', email: 'john@techsupplies.com', phone: '555-0100', city: 'New York' },
-            { id: '2', name: 'Global Electronics', contact: 'Jane Smith', email: 'jane@globalelec.com', phone: '555-0101', city: 'Los Angeles' }
-        ]);
-    }
-
-    if (!localStorage.getItem('orders')) {
-        saveStorageData('orders', [
-            { id: '1', productId: '1', supplierId: '1', quantity: 5, date: new Date().toISOString(), status: 'Pending' },
-            { id: '2', productId: '2', supplierId: '1', quantity: 10, date: new Date().toISOString(), status: 'Confirmed' }
-        ]);
-    }
-
-    if (!localStorage.getItem('users')) {
-        saveStorageData('users', [
-            { id: '1', name: 'Admin User', email: 'admin@test.com', password: 'password123', role: 'Admin', status: 'Active', joined: new Date().toISOString() },
-            { id: '2', name: 'Manager User', email: 'manager@test.com', password: 'password123', role: 'Manager', status: 'Active', joined: new Date().toISOString() }
-        ]);
+        saveStorageData('suppliers', suppliers);
     }
 }
 
-/* ========================
-   CSV Export
-======================== */
 
-function exportToCSV(data, filename) {
-    const csv = convertArrayToCSV(data);
-    const link = document.createElement('a');
-    link.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-    link.download = filename;
-    link.click();
-}
-
-function convertArrayToCSV(data) {
-    if (!data?.length) return '';
-
-    const headers = Object.keys(data[0]);
-    const rows = data.map(row => headers.map(h => {
-        const val = row[h];
-        return typeof val === 'string' && val.includes(',') ? `"${val}"` : val;
-    }).join(','));
-
-    return headers.join(',') + '\n' + rows.join('\n');
-}
+// Call on page load
+document.addEventListener('DOMContentLoaded', function () {
+    initializeSampleData();
+});
