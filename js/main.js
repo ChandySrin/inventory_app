@@ -114,13 +114,13 @@ function deleteOrder(index) {
     }
 }
 // Export function
-function exportToCSV(data, filename) {
-    const csv = convertArrayToCSV(data);
-    const link = document.createElement('a');
-    link.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-    link.download = filename;
-    link.click();
-}
+// function exportToCSV(data, filename) {
+//     const csv = convertArrayToCSV(data);
+//     const link = document.createElement('a');
+//     link.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+//     link.download = filename;
+//     link.click();
+// }
 
 // function convertArrayToCSV(data) {
 //     if (!data || data.length === 0) return '';
@@ -158,3 +158,61 @@ statusFilter.addEventListener("change", () => {
 // INITIALIZE PAGE
 populateDropdowns();
 renderOrders();
+
+
+
+
+
+
+
+// Get data from localStorage or return empty array
+function getStorageData(key) {
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : [];
+}
+
+// Save data to localStorage
+function saveStorageData(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+}
+
+
+// Delete item from localStorage
+function deleteFromStorage(key, id) {
+    const data = getStorageData(key);
+    const filtered = data.filter(item => item.id !== id);
+    saveStorageData(key, filtered);
+}
+
+// Generate unique ID
+function generateId(storageKey) {
+    const data = getStorageData(storageKey) || [];
+
+    if (data.length === 0) {
+        return '1';
+    }
+
+    const lastId = Math.max(...data.map(item => Number(item.id)));
+    return String(lastId + 1);
+}
+const newProductId = generateId('products');
+const newSupplierId = generateId('suppliers');
+
+
+// Initialize sample data if not exists
+function initializeSampleData() {
+    // Sample Products
+    if (!localStorage.getItem('products')) {
+        saveStorageData('products', products);
+    }
+    // Sample Suppliers
+    if (!localStorage.getItem('suppliers')) {
+        saveStorageData('suppliers', suppliers);
+    }
+}
+
+
+// Call on page load
+document.addEventListener('DOMContentLoaded', function () {
+    initializeSampleData();
+});
