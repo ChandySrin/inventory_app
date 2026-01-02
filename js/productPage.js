@@ -51,7 +51,7 @@ function setupProductListeners() {
     loadSuppliersInDropdown();
 }
 function generateId() {
-    const products = getStorageData('products');
+    const products = getStorageData('products') || [];
     if (products.length === 0) return '1';
     const lastId = Math.max(...products.map(p => Number(p.id)));
     return String(lastId + 1);

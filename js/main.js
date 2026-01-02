@@ -1,4 +1,43 @@
 // =======================
+// INITIALIZATION
+// =======================
+
+// Initialize sample data if none exists
+function initializeData() {
+    if (!localStorage.getItem("products") || JSON.parse(localStorage.getItem("products")).length === 0) {
+        const sampleProducts = [
+            { id: "1", name: "Laptop", category: "Electronics", price: 999.99, stock: 15, supplier: "1" },
+            { id: "2", name: "Mouse", category: "Accessories", price: 29.99, stock: 5, supplier: "1" },
+            { id: "3", name: "Keyboard", category: "Accessories", price: 79.99, stock: 20, supplier: "2" }
+        ];
+        localStorage.setItem("products", JSON.stringify(sampleProducts));
+    }
+
+    if (!localStorage.getItem("suppliers") || JSON.parse(localStorage.getItem("suppliers")).length === 0) {
+        const sampleSuppliers = [
+            { id: "1", name: "TechCorp", email: "info@techcorp.com", phone: "123-456-7890", location: "New York" },
+            { id: "2", name: "ElectroSupply", email: "contact@electrosupply.com", phone: "098-765-4321", location: "Los Angeles" }
+        ];
+        localStorage.setItem("suppliers", JSON.stringify(sampleSuppliers));
+    }
+
+    if (!localStorage.getItem("orders") || JSON.parse(localStorage.getItem("orders")).length === 0) {
+        const sampleOrders = [
+            { id: "1", productId: "1", date: new Date().toISOString(), status: "Pending", quantity: 2 },
+            { id: "2", productId: "2", date: new Date().toISOString(), status: "Confirmed", quantity: 5 }
+        ];
+        localStorage.setItem("orders", JSON.stringify(sampleOrders));
+    }
+}
+
+// Run initialization on page load
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeData);
+} else {
+    initializeData();
+}
+
+// =======================
 // ORDERS LOGIC
 // =======================
 
@@ -50,7 +89,7 @@ function renderOrders(list = orders) {
         // Validation to prevent "undefined" showing in UI if data is corrupted
         const productName = order.product || "Unknown Product";
         const supplierName = order.supplier || "Unknown Supplier";
-        
+
         ordersTable.innerHTML += `
             <tr>
                 <td>#${index + 1}</td>
@@ -71,7 +110,7 @@ function renderOrders(list = orders) {
 
 // Helper for status colors
 function getStatusClass(status) {
-    switch(status) {
+    switch (status) {
         case 'Pending': return 'bg-warning text-dark';
         case 'Confirmed': return 'bg-info';
         case 'Shipped': return 'bg-primary';
@@ -143,7 +182,7 @@ function deleteOrder(index) {
 // 5. FILTERS
 searchOrder.addEventListener("input", () => {
     const val = searchOrder.value.toLowerCase();
-    const filtered = orders.filter(o => 
+    const filtered = orders.filter(o =>
         o.product.toLowerCase().includes(val) || o.supplier.toLowerCase().includes(val)
     );
     renderOrders(filtered);

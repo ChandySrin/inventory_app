@@ -13,9 +13,9 @@ document.addEventListener('visibilitychange', function () {
 
 function loaDashboardStats() {
     // Get data from storage
-    const products = getStorageData('products');
-    const suppliers = getStorageData('suppliers');
-    const orders = getStorageData('orders');
+    const products = getStorageData('products') || [];
+    const suppliers = getStorageData('suppliers') || [];
+    const orders = getStorageData('orders') || [];
 
     // Calculate statistics
     const totalProducts = products.length;
@@ -34,10 +34,10 @@ function loadRecentActivity() {
     const table = document.getElementById('recentActivityTable');
     if (!table) return;
 
-    const orders = getStorageData('orders');
-    const products = getStorageData('products');
+    const orders = getStorageData('orders') || [];
+    const products = getStorageData('products') || [];
 
-    if (orders.length === 0) {
+    if (!orders || orders.length === 0) {
         table.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No recent activity</td></tr>';
         return;
     }
@@ -47,12 +47,12 @@ function loadRecentActivity() {
 
     table.innerHTML = recentOrders.map(order => {
         const product = products.find(p => p.id === order.productId);
-        const date = new Date(order.data).toLocaleDateString();
+        const date = new Date(order.date).toLocaleDateString();
         const statusBadge = getStatusBadge(order.status);
 
         return `
             <tr>
-                <td>${product ?  product.name : 'Unknown'}</td>
+                <td>${product ? product.name : 'Unknown'}</td>
                 <td><span class="badge badge-info">Order</span></td>
                 <td>${date}</td>
                 <td>${statusBadge}</td>
