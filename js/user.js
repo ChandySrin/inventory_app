@@ -46,7 +46,7 @@ function setupUserListeners() {
     const userModal = document.getElementById('userModal');
     if (userModal) {
         userModal.addEventListener('hidden.bs.modal', function () {
-            document.getElementById('userFrom').reset();
+            document.getElementById('userForm').reset();
             document.getElementById('userForm').dataset.editId = '';
         });
     }
@@ -88,7 +88,7 @@ function displayUsers() {
                 <td>
                     <button class="btn btn-sm btn-warning" onlick="editUser('${user.id}')">
                         <i class="bi bi-pencil"></i>
-                    </butoon>
+                    </button>
                     <button class="btn btn-sm btn-danger" onlick="deleteUser('${user.id}')">
                         <i class="bi bi-trash"></i>
                     </butoon>
@@ -107,7 +107,7 @@ function filterUsers() {
         const matchesSearch =
             user.name.toLowerCase().includes(searchTerm) ||
             user.email.toLowerCase().includes(searchTerm);
-        const matchesRole = !roleFilter || user.tole === roleFilter;
+        const matchesRole = !roleFilter || user.role === roleFilter;
         const matchesStatus = !statusFilter || user.status === statusFilter;
         return matchesSearch && matchesRole && matchesStatus;
     });
@@ -223,7 +223,7 @@ function editUser(userId) {
     document.getElementById('userStatus').value = user.status;
     document.getElementById('userPassword').value = '';
     document.getElementById('userForm').dataset.editId = userId;
-    document.getElementById('userModalLable').textContent = 'Edit User';
+    document.getElementById('userModalLabel').textContent = 'Edit User';
     document.getElementById('userPassword').parentElement.style.display = 'none';
 
     const modal = new bootstrap.Modal(document.getElementById('userModal'));
@@ -235,6 +235,6 @@ function deleteUser(userId) {
         usersData = usersData.filter(u => u.id !== userId);
         saveStorageData('users', usersData);
         displayUsers();
-        showNotification('User deleted successfully!', 'sucess');
+        showNotification('User deleted successfully!', 'success');
     }
 }
