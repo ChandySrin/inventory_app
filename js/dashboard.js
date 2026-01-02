@@ -1,9 +1,13 @@
+/* ========================
+   Dashboard JS - Dashboard Statistics
+   ======================== */
+
 document.addEventListener('DOMContentLoaded', function () {
     loadDashboardStats();
     loadRecentActivity();
 });
 
-// Reload stats 
+// Reload stats when page becomes visible (user returns from another page)
 document.addEventListener('visibilitychange', function () {
     if (document.visibilityState === 'visible') {
         loadDashboardStats();
@@ -13,9 +17,9 @@ document.addEventListener('visibilitychange', function () {
 
 function loadDashboardStats() {
     // Get data from storage
-    const products = getStorageData('products') || [];
-    const suppliers = getStorageData('suppliers') || [];
-    const orders = getStorageData('orders') || [];
+    const products = getStorageData('products');
+    const suppliers = getStorageData('suppliers');
+    const orders = getStorageData('orders');
 
     // Calculate statistics
     const totalProducts = products.length;
@@ -34,10 +38,10 @@ function loadRecentActivity() {
     const table = document.getElementById('recentActivityTable');
     if (!table) return;
 
-    const orders = getStorageData('orders') || [];
-    const products = getStorageData('products') || [];
+    const orders = getStorageData('orders');
+    const products = getStorageData('products');
 
-    if (!orders || orders.length === 0) {
+    if (orders.length === 0) {
         table.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No recent activity</td></tr>';
         return;
     }
@@ -46,7 +50,7 @@ function loadRecentActivity() {
     const recentOrders = orders.slice(-5).reverse();
 
     table.innerHTML = recentOrders.map(order => {
-        const product = products.find(p => p.id.toString() === order.productId.toString());
+        const product = products.find(p => p.id === order.productId);
         const date = new Date(order.date).toLocaleDateString();
         const statusBadge = getStatusBadge(order.status);
 
@@ -70,5 +74,5 @@ function getStatusBadge(status) {
     };
 
     const badgeClass = statusMap[status] || 'secondary';
-    return `<span class="badge bg-${badgeClass}">${status}</span>`;
+    return `<span class="badge badge-${badgeClass}">${status}</span>`;
 }
