@@ -24,27 +24,6 @@ body {
     color: #333;
 }
 
-/* ========================
-   Login Page Styles
-   ======================== */
-
-.login-page {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.login-container {
-    width: 100%;
-    max-width: 420px;
-}
-
-.login-container .card {
-    border: none;
-    border-radius: 10px;
-}
-
-.login-container .card-body {
-    border-radius: 10px;
-}
 
 /* ========================
    Sidebar Navigation
