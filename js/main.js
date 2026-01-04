@@ -32,6 +32,8 @@ if (document.readyState === "loading") {
     initializeData();
 }
 
+
+
 // ORDERS LOGIC
 
 const ordersTable = document.getElementById("ordersTable");
@@ -39,6 +41,10 @@ const saveOrderBtn = document.getElementById("saveOrderBtn");
 const orderForm = document.getElementById("orderForm");
 const searchOrder = document.getElementById("searchOrder");
 const statusFilter = document.getElementById("statusFilter");
+
+// INITIALIZE PAGE
+populateDropdowns();
+renderOrders();
 
 // Load data from localStorage
 let orders = JSON.parse(localStorage.getItem("orders")) || [];
@@ -152,9 +158,7 @@ statusFilter.addEventListener("change", () => {
     renderOrders(filtered);
 });
 
-// INITIALIZE PAGE
-populateDropdowns();
-renderOrders();
+
 
 
 
