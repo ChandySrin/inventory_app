@@ -32,6 +32,7 @@ if (document.readyState === "loading") {
     initializeData();
 }
 
+<<<<<<< HEAD
 // ORDERS LOGIC
 
 const ordersTable = document.getElementById("ordersTable");
@@ -155,6 +156,8 @@ statusFilter.addEventListener("change", () => {
 // INITIALIZE PAGE
 populateDropdowns();
 renderOrders();
+=======
+>>>>>>> 63b197aaf7fa9dba0f2a475d10903b0f3be32949
 
 
 
@@ -230,6 +233,7 @@ function generateId(storageKey) {
 }
 const newProductId = generateId('products');
 const newSupplierId = generateId('suppliers');
+const newOrderId = generateId('orders');
 
 
 // Initialize sample data if not exists
