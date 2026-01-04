@@ -35,7 +35,7 @@ function initUsers() {
         {
             id: '3',
             name: 'Admin User',
-            email: 'mary@gmail.com',
+            email: 'mary@email.com',
             password: '221199',
             role: 'Admin',
             status: 'Active',
@@ -44,7 +44,7 @@ function initUsers() {
         {
             id: '4',
             name: 'Admin User',
-            email: 'chandy@gmail.com',
+            email: 'chandy@email.com',
             password: 'chandy123',
             role: 'Admin',
             status: 'Active',
@@ -53,8 +53,8 @@ function initUsers() {
         {
             id: '5',
             name: 'Admin User',
-            email: 'mesa@gmail.com',
-            password: 'mesasmos',
+            email: 'mesa@email.com',
+            password: 'mesa123',
             role: 'Admin',
             status: 'Active',
             joined: new Date().toISOString()
